@@ -10,6 +10,8 @@ function login() {
   if (emailText.length < 5 || passwordText.length < 8 || isSignedIn) {
       if (isSignedIn){
           logout()
+      }else if (elementsShownState == 2){
+        showElements(0);
       }else{
         alert("Please type the email and the password correctly.");
       }
