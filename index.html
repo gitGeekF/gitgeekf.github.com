@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Firebase Login</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="mainDiv">
+            <h2>Sign in to Firebase</h2>
+            <input type="email" id="emailField" placeholder="Email">
+            <input type="password" id="passwordField" placeholder="Password">
+            <input type="password" id="secPasswordField" placeholder="Confirm password">
+            <button onclick="login()" id="signInBtn" >Sign in</button>
+            <button onclick="signUp()" id="singUpBtn" >Sign up here</button>
+        </div>
+        
+        <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
+            <script>
+                // Initialize Firebase
+                 var config = {
+                 apiKey: "AIzaSyAOFnyW8RERM8yzhMKp7L_3Ri8Jj8fuU3U",
+                 authDomain: "test-73ba0.firebaseapp.com",
+                 databaseURL: "https://test-73ba0.firebaseio.com",
+                 projectId: "test-73ba0",
+                 storageBucket: "test-73ba0.appspot.com",
+                 messagingSenderId: "881083798076"
+                 };
+                firebase.initializeApp(config);
+            </script>
+        <script src="index.js"></script>
+        
+    </body>
+</html>
