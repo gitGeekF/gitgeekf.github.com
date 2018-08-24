@@ -1,19 +1,17 @@
-document.getElementById("secPasswordField").hidden = true;
 var isSignedIn = false;
 var elementsShownState = 0;
 
 function login() {
   var emailText = document.getElementById("emailField").value;
   var passwordText = document.getElementById("passwordField").value;
-    
-  alert(isSignedIn);
+
   if (emailText.length < 5 || passwordText.length < 8 || isSignedIn) {
       if (elementsShownState == 2){
           logout()
-      }else if (isSignedIn){
+      }else if (elementsShownState == 1){
         showElements(0);
       }else{
-        alert("Please type the email and the password correctly.");
+        diagnozeError(emailText,passwordText,passwordText);
       }
   }else{
     firebase.auth().signInWithEmailAndPassword(emailText, passwordText).catch(function(error) {
@@ -32,21 +30,31 @@ function signUp(){
   var p1 = document.getElementById("secPasswordField").value;
   var p2 = document.getElementById("passwordField").value;
   var e1 = document.getElementById("emailField").value;
+
   if (elementsShownState == 0){
-    showElements(2);
+    //shows sign up screen
+    showElements(1);
   }else{
+    //checks for errors, if it's ok it continues
     if(p1 == p2 && p1.length >= 8 && e1.length >= 5 ){
+      var error = null
       firebase.auth().createUserWithEmailAndPassword(e1, p1).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
         // ...
-        alert("Error" + errorMessage);
+        error = error.message
+        showElements(1);
+        alert("Error: " + errorMessage);
       });
+      if (error == null){
+        showElements(0);
+      }
     }else{
-      alert("Please make sure that your password is has at least 8 letters.");
+      showElements(1);
+      diagnozeError(e1,p1,p2);  
     }
-    showElements(0);
+    
   }
   
 }
@@ -60,10 +68,10 @@ function logout(){
 }
 
 
-
 firebase.auth().onAuthStateChanged(function (user) {
   if (user){
     showElements(2);
+    alert("Welcome Back");
 
   }else {
     showElements(0);
@@ -72,44 +80,60 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 function showElements(config){
-
-  document.getElementById("passwordField").value = "";
-  document.getElementById("secPasswordField").value = "";
+  var btn1 = "signInBtn";
+  var btn2 = "signUpBtn";
+  var i1 = "emailField";
+  var i2 = "passwordField";
+  var i3 = "secPasswordField";
+  
+  document.getElementById(i2).value = "";
+  document.getElementById(i3).value = "";
 
   elementsShownState = config;
-
+  
   if (config == 0){
-    document.getElementById("singInBtn").hidden = false;
-    document.getElementById("emailField").hidden = false;
-    document.getElementById("passwordField").hidden = false;
-    document.getElementById("signUpBtn").hidden = false;
-    document.getElementById("secPasswordField").hidden = true;
+    document.getElementById(btn1).hidden = false;
+    document.getElementById(btn2).hidden = false;
+    document.getElementById(i1).hidden = false;
+    document.getElementById(i2).hidden = false;
+    document.getElementById(i3).hidden = true; 
 
-    document.getElementById("singInBtn").textContent = "Sign in";
-    document.getElementById("singUpBtn").textContent = "Sign up here";
+    document.getElementById(btn1).textContent = "Sign in";
+    document.getElementById(btn2).textContent = "Sign up here";
 
     isSignedIn = false;
   }else if (config == 1){
-    document.getElementById("singInBtn").hidden = false;
-    document.getElementById("emailField").hidden = false;
-    document.getElementById("passwordField").hidden = false;
-    document.getElementById("signUpBtn").hidden = false;
-    document.getElementById("secPasswordField").hidden = false;
+    document.getElementById(btn1).hidden = false;
+    document.getElementById(btn2).hidden = false;
+    document.getElementById(i1).hidden = false;
+    document.getElementById(i2).hidden = false;
+    document.getElementById(i3).hidden = false; 
 
-    document.getElementById("singInBtn").textContent = "Cancel";
-    document.getElementById("singUpBtn").textContent = "Create my account";
+    document.getElementById(btn1).textContent = "Cancel";
+    document.getElementById(btn2).textContent = "Create my account";
 
     isSignedIn = false;
   }else {
-    document.getElementById("singInBtn").hidden = false;
-    document.getElementById("emailField").hidden = true;
-    document.getElementById("passwordField").hidden = true;
-    document.getElementById("signUpBtn").hidden = true;
-    document.getElementById("secPasswordField").hidden = true;
-
-    document.getElementById("signInBtn").textContent = "Sign out";
-    document.getElementById("singUpBtn").textContent = "Sign up here";
-
+    
+    document.getElementById(btn1).hidden = false;
+    document.getElementById(btn2).hidden = false; 
+    document.getElementById(i1).hidden = true;
+    document.getElementById(i2).hidden = true;
+    document.getElementById(i3).hidden = true; 
+    
+    document.getElementById(btn1).textContent = "Sign out";
+    document.getElementById(btn2).textContent = "Sign up here";
+    
     isSignedIn = true;
+  }
+}
+
+function diagnozeError(e1, p1, p2){
+  if (e1.length < 5){
+    alert("Please enter a valid email.")
+  }else if(p1.length < 8){
+    alert("Please make sure that your password has at least 8 letters.");
+  }else{
+    alert("Please make sure that your passwords match.");
   }
 }
