@@ -2,13 +2,14 @@
     <head>
         <title>Firebase Login</title>
         <link rel="stylesheet" href="style.css">
+
     </head>
     <body>
         <div class="mainDiv">
             <h2>Sign in to Firebase</h2>
             <input type="email" id="emailField" placeholder="Email">
             <input type="password" id="passwordField" placeholder="Password">
-            <input type="password" id="secPasswordField" placeholder="Confirm password">
+            <input hidden=true type="password" id="secPasswordField" placeholder="Confirm password">
             <button onclick="login()" id="signInBtn" >Sign in</button>
             <button onclick="signUp()" id="signUpBtn" >Sign up here</button>
         </div>
