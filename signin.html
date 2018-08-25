@@ -5,12 +5,16 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Firebase Login 2</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="sign.css">
     </head>
     <body>
         
-        <div id="mainDiv">
-            <button onclick="signOut()" id="btn3">Sign out</button>
+        <div id="mainDiv" >
+            <input id="e1" placeholder="Email" type="email">
+            <input id="p1" placeholder="Password" type="password">
+            <button id="btn1" onclick="signIn()" >Sign in</button>
+            <button id="btn2" onclick="signUp()" >Sign up</button>
+            <a href="forgot.html" class="forgotPassword" >Forgot your password?</a>
 
         </div>
         <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
@@ -26,8 +30,6 @@
                  };
                 firebase.initializeApp(config);
             </script>
-        <script src="main.js"></script>
+        <script src="signin.js"></script>
     </body>
 </html>
-
-
