@@ -1,6 +1,6 @@
 document.getElementById("p1").value = "";
 var pressedSignIn = false;
-signOut();
+
 
 function signIn(){
     let e1 = document.getElementById("e1").value;
@@ -8,6 +8,7 @@ function signIn(){
     document.getElementById("p1").value = "";
 
     pressedSignIn = true;
+    signOut();
     firebase.auth().signInWithEmailAndPassword(e1, p1).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -61,11 +62,11 @@ function finalSignIn(){
                 location.replace("index.html");
             }else if(emailVerified == false){
                 alert("Please verify your email address.");
-                signOut();
+                
                 
             }else{
                 alert("Unexpected error occurred.");
-                signOut();
+                
             }
         }else{
             var emailVerified = user.emailVerified;
